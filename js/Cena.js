@@ -1,3 +1,5 @@
+import Sprite from "./Sprite.js";
+
 export default class Cena {
     /* E responsavel por desenhar
         elementos na tela em uma animação.
@@ -35,6 +37,7 @@ export default class Cena {
         sprite.cena = this;
         this.sprites.push(sprite);
     }
+
     passo(dt) {
         if (this.assets.acabou()) {
             for (const sprite of this.sprites) {
@@ -100,5 +103,38 @@ export default class Cena {
     configuraMapa(mapa) {
         this.mapa = mapa;
         this.mapa.cena = this;
+    }
+
+    desenharSpritesAleatorios() {
+        let podeDesenhar = true;
+        while (podeDesenhar) {
+            // NUMERO ALEATORIO PARA O WIDTH DO CANVAS CONSIDERANDO A BORDA
+            let randomNumberX = Math.floor(Math.random() * (416 - 32) + 32);
+            // NUMERO ALEATORIO PARA O HEIGTH DO CANVAS CONSIDERANDO A BORDA
+            let randomNumberY = Math.floor(Math.random() * (288 - 32) + 32);
+            // VELOCIDADE ALEATORIA ENTRE 1 E 10
+            let randomNumberVelX = Math.floor(Math.random() * (20 - 1) + 1);
+            let randomNumberVelY = Math.floor(Math.random() * (20 - 1) + 1);
+            let sprite = new Sprite({
+                x: randomNumberX,
+                y: randomNumberY,
+                vx: randomNumberVelX,
+                vy: randomNumberVelY,
+                color: "purple"
+            });
+
+            var pmx = Math.floor(sprite.x / this.mapa.SIZE);
+            var pmy = Math.floor(sprite.y / this.mapa.SIZE);
+            if (this.mapa.tiles[pmy][pmx] != 1) {
+                this.adicionar(sprite);
+                podeDesenhar = false;
+            }
+            podeDesenhar = false;
+        }
+
+        const interval = setInterval(() => {
+            this.desenharSpritesAleatorios();
+            clearInterval(interval);
+        }, 4000);
     }
 }
