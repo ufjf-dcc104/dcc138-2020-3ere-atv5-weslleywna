@@ -64,6 +64,9 @@ export default class Sprite {
     aplicaRestricoesDireita(pmx, pmy) {
         if (this.vx > 0) {
             const SIZE = this.cena.mapa.SIZE;
+            if (pmy >= this.cena.mapa.LINHAS || pmx >= this.cena.mapa.COLUNAS) {
+                return;
+            }
             if (this.cena.mapa.tiles[pmy][pmx] != 0) {
                 const tile = { x: pmx * SIZE + SIZE / 2, y: pmy * SIZE + SIZE / 2, w: SIZE, h: SIZE };
                 if (this.colidiuCom(tile)) {
@@ -77,6 +80,9 @@ export default class Sprite {
     aplicaRestricoesEsquerda(pmx, pmy) {
         if (this.vx < 0) {
             const SIZE = this.cena.mapa.SIZE;
+            if (pmy >= this.cena.mapa.LINHAS || pmx >= this.cena.mapa.COLUNAS) {
+                return;
+            }
             if (this.cena.mapa.tiles[pmy][pmx] != 0) {
                 const tile = { x: pmx * SIZE + SIZE / 2, y: pmy * SIZE + SIZE / 2, w: SIZE, h: SIZE };
                 if (this.colidiuCom(tile)) {
@@ -90,6 +96,9 @@ export default class Sprite {
     aplicaRestricoesBaixo(pmx, pmy) {
         if (this.vy > 0) {
             const SIZE = this.cena.mapa.SIZE;
+            if (pmy >= this.cena.mapa.LINHAS || pmx >= this.cena.mapa.COLUNAS) {
+                return;
+            }
             if (this.cena.mapa.tiles[pmy][pmx] != 0) {
                 const tile = { x: pmx * SIZE + SIZE / 2, y: pmy * SIZE + SIZE / 2, w: SIZE, h: SIZE };
                 if (this.colidiuCom(tile)) {
@@ -103,6 +112,9 @@ export default class Sprite {
     aplicaRestricoesCima(pmx, pmy) {
         if (this.vy < 0) {
             const SIZE = this.cena.mapa.SIZE;
+            if (pmy >= this.cena.mapa.LINHAS || pmx >= this.cena.mapa.COLUNAS) {
+                return;
+            }
             if (this.cena.mapa.tiles[pmy][pmx] != 0) {
                 const tile = { x: pmx * SIZE + SIZE / 2, y: pmy * SIZE + SIZE / 2, w: SIZE, h: SIZE };
                 if (this.colidiuCom(tile)) {

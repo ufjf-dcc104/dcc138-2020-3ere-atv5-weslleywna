@@ -95,6 +95,7 @@ export default class Cena {
             const idx = this.sprites.indexOf(alvo);
             if (idx >= 0) {
                 this.sprites.splice(idx, 1);
+                this.assets.play("boom");
             }
         }
         this.aRemover = [];
@@ -113,8 +114,9 @@ export default class Cena {
             // NUMERO ALEATORIO PARA O HEIGTH DO CANVAS CONSIDERANDO A BORDA
             let randomNumberY = Math.floor(Math.random() * (288 - 32) + 32);
             // VELOCIDADE ALEATORIA ENTRE 1 E 10
-            let randomNumberVelX = Math.floor(Math.random() * (20 - 1) + 1);
-            let randomNumberVelY = Math.floor(Math.random() * (20 - 1) + 1);
+            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+            let randomNumberVelX = Math.floor(Math.random() * (20 - 1) + 1) * plusOrMinus;
+            let randomNumberVelY = Math.floor(Math.random() * (20 - 1) + 1) * plusOrMinus;
             let sprite = new Sprite({
                 x: randomNumberX,
                 y: randomNumberY,
@@ -125,6 +127,7 @@ export default class Cena {
 
             var pmx = Math.floor(sprite.x / this.mapa.SIZE);
             var pmy = Math.floor(sprite.y / this.mapa.SIZE);
+        
             if (this.mapa.tiles[pmy][pmx] != 1) {
                 this.adicionar(sprite);
                 podeDesenhar = false;
@@ -135,6 +138,6 @@ export default class Cena {
         const interval = setInterval(() => {
             this.desenharSpritesAleatorios();
             clearInterval(interval);
-        }, 4000);
+        }, 100);
     }
 }
