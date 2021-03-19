@@ -4,17 +4,12 @@ export default class Cena {
     /* E responsavel por desenhar
         elementos na tela em uma animação.
     */
-    constructor(canvas, assets = null) {
+    constructor(canvas = null, assets = null) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
-        this.sprites = [];
-        this.aRemover = [];
-        this.t0 = null;
-        this.dt = 0;
-        this.idAnim = null;
+        this.ctx = canvas?.getContext("2d");
         this.assets = assets;
-        this.mapa = null;
         this.game = null;
+        this.preparar();
     }
 
     desenhar() {
@@ -56,15 +51,19 @@ export default class Cena {
         this.checaColisao();
         this.removerSprites();
 
-        this.iniciar();
+        if (this.rodando) {
+            this.iniciar();
+        }
         this.t0 = t;
     }
 
     iniciar() {
+        this.rodando = true;
         this.idAnim = requestAnimationFrame((t) => { this.quadro(t); });
     }
 
     parar() {
+        this.rodando = false;
         cancelAnimationFrame(this.idAnim);
         this.t0 = null;
         this.dt = 0;
@@ -107,6 +106,16 @@ export default class Cena {
         this.mapa.cena = this;
     }
 
+    preparar() {
+        this.sprites = [];
+        this.aRemover = [];
+        this.t0 = null;
+        this.dt = 0;
+        this.idAnim = null;
+        this.mapa = null;
+        this.rodando = true;
+    }
+
     desenharSpritesAleatorios() {
         let podeDesenhar = true;
         while (podeDesenhar) {
@@ -123,7 +132,8 @@ export default class Cena {
                 y: randomNumberY,
                 vx: randomNumberVelX,
                 vy: randomNumberVelY,
-                color: "purple"
+                color: "purple",
+                tags: ["random"]
             });
 
             var pmx = Math.floor(sprite.x / this.mapa.SIZE);
