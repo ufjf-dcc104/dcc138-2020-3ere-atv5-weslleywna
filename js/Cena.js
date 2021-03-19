@@ -138,6 +138,6 @@ export default class Cena {
         const interval = setInterval(() => {
             this.desenharSpritesAleatorios();
             clearInterval(interval);
-        }, 100);
+        }, 4000);
     }
 }
